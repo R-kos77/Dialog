@@ -188,4 +188,16 @@
     <string name="menu_export_pdf">ወደ PDF ላክ</string>
     <string name="menu_export_csv">ወደ CSV ላክ</string>
     <string name="menu_share">አጋራ</string>
+    
+    <!-- Content Descriptions -->
+    <string name="language_icon_desc">የቋንቋ ምርጫ አዶ</string>
+    <string name="english_icon_desc">የእንግሊዝኛ ቋንቋ አዶ</string>
+    <string name="amharic_icon_desc">የአማርኛ ቋንቋ አዶ</string>
+    <string name="choose_language">ቋንቋ ይምረጡ\nChoose Your Language</string>
+    
+    <!-- Exit Dialog -->
+    <string name="exit_app">ከመተግበሪያው ውጣ</string>
+    <string name="exit_app_message">መውጣት እንደሚፈልጉ እርግጠኛ ነዎት?</string>
+    <string name="yes">አዎ</string>
+    <string name="no">አይ</string>
 </resources> 

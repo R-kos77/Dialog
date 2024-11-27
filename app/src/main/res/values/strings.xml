@@ -188,4 +188,16 @@
     <string name="menu_export_pdf">Export to PDF</string>
     <string name="menu_export_csv">Export CSV</string>
     <string name="menu_share">Share</string>
+    
+    <!-- Content Descriptions -->
+    <string name="language_icon_desc">Language selection icon</string>
+    <string name="english_icon_desc">English language icon</string>
+    <string name="amharic_icon_desc">Amharic language icon</string>
+    <string name="choose_language">Choose Your Language\nቋንቋ ይምረጡ</string>
+    
+    <!-- Exit Dialog -->
+    <string name="exit_app">Exit App</string>
+    <string name="exit_app_message">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

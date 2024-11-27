@@ -4,88 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="32dp"
-    android:background="@color/white">
+    android:padding="16dp">
 
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
         android:src="@drawable/ic_language"
         app:tint="@color/colorPrimary"
-        android:layout_marginBottom="32dp"/>
+        android:contentDescription="@string/language_icon_desc" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Your Language\nቋንቋ ይምረጡ"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:text="@string/choose_language"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/textPrimary"
-        android:layout_marginBottom="48dp"/>
+        android:textStyle="bold" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/englishCard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_marginTop="48dp"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/english_option"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical">
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/language_option_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_english"
+                app:tint="@color/colorPrimary"
+                android:contentDescription="@string/english_icon_desc" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="8dp"
                 android:text="English"
-                android:textSize="18sp"
-                android:textColor="@color/textPrimary"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_arrow_forward"
-                app:tint="@color/colorPrimary"/>
+                android:textSize="18sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/amharicCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/amharic_option"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="አማርኛ"
-                android:textSize="18sp"
-                android:textColor="@color/textPrimary"/>
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/language_option_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_arrow_forward"
-                app:tint="@color/colorPrimary"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_amharic"
+                app:tint="@color/colorPrimary"
+                android:contentDescription="@string/amharic_icon_desc" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="አማርኛ"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout> 

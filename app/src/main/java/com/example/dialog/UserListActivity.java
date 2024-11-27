@@ -267,4 +267,14 @@ public class UserListActivity extends BaseActivity {
             return view;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+            .setTitle(R.string.exit_app)
+            .setMessage(R.string.exit_app_message)
+            .setPositiveButton(R.string.yes, (dialog, which) -> finishAffinity())
+            .setNegativeButton(R.string.no, null)
+            .show();
+    }
 } 
