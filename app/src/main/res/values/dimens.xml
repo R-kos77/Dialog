@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cell_padding">8dp</dimen>
+    <dimen name="edit_button_size">32dp</dimen>
+    <dimen name="date_cell_width">75dp</dimen>
+    <dimen name="time_cell_width">70dp</dimen>
+    <dimen name="mgdl_cell_width">60dp</dimen>
+    <dimen name="status_cell_width">65dp</dimen>
+</resources> 

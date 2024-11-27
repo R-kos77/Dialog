@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dialog</string>
+    
+    <!-- Common Actions -->
+    <string name="save">አስቀምጥ</string>
+    <string name="cancel">ተመለስ</string>
+    <string name="delete">ሰርዝ</string>
+    <string name="edit">አስተካክል</string>
+    <string name="ok">እሺ</string>
+    <string name="quit">ውጣ</string>
+    <string name="stay">ቆይ</string>
+    <string name="continue_editing">ማስተካከል ቀጥል</string>
+    <string name="try_again">እንደገና ሞክር</string>
+    <string name="close">ዝጋ</string>
+    <string name="done">ተጠናቅቋል</string>
+    <string name="apply">ተግብር</string>
+    <string name="reset">ዳግም አስጀምር</string>
+    <string name="clear">አጽዳ</string>
+    <string name="search">ፈልግ</string>
+    <string name="view">ተመልከት</string>
+    <string name="update">አዘምን</string>
+    
+    <!-- Profile and User Management -->
+    <string name="new_profile">አዲስ መገለጫ</string>
+    <string name="edit_profile">መገለጫ አስተካክል</string>
+    <string name="profile_details">የመገለጫ ዝርዝሮች</string>
+    <string name="profile_saved">መገለጫ በተሳካ ሁኔታ ተቀምጧል</string>
+    <string name="add_user">ተጠቃሚ ጨምር</string>
+    <string name="edit_user">ተጠቃሚን አስተካክል</string>
+    <string name="delete_user">ተጠቃሚን ሰርዝ</string>
+    <string name="select_user">ተጠቃሚ ይምረጡ</string>
+    <string name="no_users">ምንም ተጠቃሚዎች አልተገኙም</string>
+    
+    <!-- Form Fields -->
+    <string name="first_name">ስም</string>
+    <string name="last_name">የአባት ስም</string>
+    <string name="age">እድሜ</string>
+    <string name="gender">ጾታ</string>
+    <string name="male">ወንድ</string>
+    <string name="female">ሴት</string>
+    
+    <!-- Validation Messages -->
+    <string name="first_name_required">ስም ማስገባት አስፈላጊ ነው</string>
+    <string name="last_name_required">የአባት ስም ማስገባት አስፈላጊ ነው</string>
+    <string name="age_required">እድሜ ማስገባት አስፈላጊ ነው</string>
+    <string name="gender_required">ጾታ መምረጥ አስፈላጊ ነው</string>
+    <string name="invalid_age_range">እድሜ በ0 እና 120 መካከል መሆን አለበት</string>
+    <string name="field_required">ይህ መስክ አስፈላጊ ነው</string>
+    <string name="fill_all_fields">እባክዎ ሁሉንም ቦታዎች ይሙሉ</string>
+    
+    <!-- Blood Sugar Management -->
+    <string name="blood_sugar_level">የደም ስኳር መጠን</string>
+    <string name="enter_blood_sugar">እባክዎ የደም ስኳር መጠን ያስገቡ</string>
+    <string name="save_reading">ንባብን አስቀምጥ</string>
+    <string name="reading_saved">ንባብ በተሳካ ሁኔታ ተቀምጧል</string>
+    <string name="reading_updated">ንባብ በተሳካ ሁኔታ ተዘምኗል</string>
+    
+    <!-- Units -->
+    <string name="unit">መለኪያ</string>
+    <string name="mgdl">mg/dL</string>
+    <string name="mmol">mmol/L</string>
+    
+    <!-- Status -->
+    <string name="low">ዝቅተኛ</string>
+    <string name="high">ከፍተኛ</string>
+    <string name="normal">መደበኛ</string>
+    
+    <!-- Reminders -->
+    <string name="reminder_title">ማስታወሻዎች</string>
+    <string name="select_reminder_time">የማስታወሻ ሰዓት ይምረጡ</string>
+    <string name="reminder_saved">ማስታወሻ በተሳካ ሁኔታ ተቀምጧል</string>
+    <string name="delete_reminder">ማስታወሻን ሰርዝ</string>
+    
+    <!-- Dialog Messages -->
+    <string name="quit_without_saving">ሳያስቀምጡ ይውጡ</string>
+    <string name="quit_without_saving_message">ለውጦችን ሳያስቀምጡ መውጣት ይፈልጋሉ?</string>
+    
+    <!-- Language -->
+    <string name="select_language">ቋንቋ ይምረጡ</string>
+    <string name="english">English</string>
+    <string name="amharic">አማርኛ</string>
+    
+    <!-- Error Messages -->
+    <string name="error_loading_data">መረጃን በመጫን ላይ ስህተት</string>
+    <string name="error_saving_data">መረጃን በማስቀመጥ ላይ ስህተት</string>
+    <string name="error_updating_data">መረጃን በማዘመን ላይ ስህተት</string>
+    <string name="error_deleting_data">መረጃን በመሰረዝ ላይ ስህተት</string>
+    <string name="error_saving">በማስቀመጥ ላይ ስህተት</string>
+    <string name="error_updating">በማዘመን ላይ ስህተት</string>
+    <string name="error_saving_reminder">ማስታወሻን በማስቀመጥ ላይ ስህተት</string>
+    <string name="invalid_number">ልክ ያልሆነ ቁጥር</string>
+    
+    <!-- Format Strings -->
+    <string name="user_info_format">%s %s፣ %d፣ %s</string>
+    <string name="reminder_set">ማስታወሻ ለ %s ተዘጋጅቷል</string>
+    
+    <!-- Navigation -->
+    <string name="view_logs">ንባቦችን ይመልከቱ</string>
+    <string name="view_reminders">ማስታወሻዎችን ይመልከቱ</string>
+    <string name="view_trends">አዝማሚያዎችን ይመልከቱ</string>
+    
+    <!-- Blood Sugar -->
+    <string name="blood_sugar_trend">የደም ስኳር አዝማሚያ</string>
+    <string name="statistics">ስታትስቲክስ</string>
+    <string name="mmoll">mmol/L</string>
+    
+    <!-- Profile -->
+    <string name="save_profile">መገለጫን አስቀምጥ</string>
+    
+    <!-- Meal Times -->
+    <string name="before_breakfast">ቁርስ በፊት</string>
+    <string name="after_breakfast">ቁርስ በኋላ</string>
+    <string name="before_lunch">ምሳ በፊት</string>
+    <string name="after_lunch">ምሳ በኋላ</string>
+    <string name="before_dinner">እራት በፊት</string>
+    <string name="after_dinner">እራት በኋላ</string>
+    <string name="other">ሌላ</string>
+    
+    <!-- Table Headers -->
+    <string name="date">ቀን</string>
+    <string name="time">ሰዓት</string>
+    <string name="status">ሁኔታ</string>
+    
+    <!-- Blood Sugar -->
+    <string name="edit_reading">ንባብን አስተካክል</string>
+    <string name="no_readings">ምንም ንባቦች አልተገኙም</string>
+    <string name="trends">አዝማሚያዎች</string>
+    
+    <!-- Time Selection -->
+    <string name="select_time">ሰዓት ይምረጡ</string>
+    
+    <!-- Form Fields -->
+    <string name="select_gender">እባክዎ ጾታ ይምረጡ</string>
+    
+    <!-- Headers -->
+    <string name="input_header">የደም ስኳር ንባብ</string>
+    <string name="logs_header">የደም ስኳር መዝገቦች</string>
+    <string name="trends_header">የደም ስኳር አዝማሚያዎች</string>
+    <string name="reminders_header">ማስታወሻዎች</string>
+    <string name="profile_header">የተጠቃሚ መገለጫ</string>
+    <string name="users_header">ተጠቃሚ ይምረጡ</string>
+    
+    <!-- Labels -->
+    <string name="name_label">ስም፡</string>
+    <string name="age_label">እድሜ፡</string>
+    <string name="gender_label">ጾታ፡</string>
+    <string name="first_name_label">ስም፡</string>
+    <string name="last_name_label">የአባት ስም፡</string>
+    
+    <!-- Input Hints -->
+    <string name="enter_first_name">ስም ያስገቡ</string>
+    <string name="enter_last_name">የአባት ስም ያስገቡ</string>
+    <string name="enter_age">እድሜ ያስገቡ</string>
+    <string name="enter_gender">ጾታ ይምረጡ</string>
+    <string name="welcome_user">እንኳን ደህና መጡ፣ %s!</string>
+    
+    <!-- Dialog Titles -->
+    <string name="delete_reading_title">ንባብን ሰርዝ</string>
+    <string name="delete_user_title">ተጠቃሚን ሰርዝ</string>
+    <string name="delete_reminder_title">ማስታወሻን ሰርዝ</string>
+    
+    <!-- Dialog Messages -->
+    <string name="delete_reading_message">እርግጠኛ ነዎት ይህን ንባብ መሰረዝ ይፈልጋሉ?</string>
+    <string name="delete_user_message">እርግጠኛ ነዎት ይህን ተጠቃሚ መሰረዝ ይፈልጋሉ? ሁሉም መረጃ እስከመጨረሻው ይሰረዛል።</string>
+    <string name="delete_reminder_message">እርግጠኛ ነዎት ይህን ማስታወሻ መሰረዝ ይፈልጋሉ?</string>
+    
+    <!-- Success Messages -->
+    <string name="reading_deleted">ንባብ በተሳካ ሁኔታ ተሰርዟል</string>
+    <string name="user_deleted">ተጠቃሚ በተሳካ ሁኔታ ተሰርዟል</string>
+    <string name="reminder_deleted">ማስታወሻ በተሳካ ሁኔታ ተሰርዟል</string>
+    
+    <!-- Error Messages -->
+    <string name="error_deleting">በመሰረዝ ላይ ስህተት</string>
+    <string name="error_deleting_user">ተጠቃሚን በመሰረዝ ላይ ስህተት</string>
+    <string name="error_deleting_reminder">ማስታወሻን በመሰረዝ ላይ ስህተት</string>
+    
+    <!-- Reminder Messages -->
+    <string name="reminder_before_breakfast">ቁርስ በፊት የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    <string name="reminder_after_breakfast">ቁርስ በኋላ የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    <string name="reminder_before_lunch">ምሳ በፊት የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    <string name="reminder_after_lunch">ምሳ በኋላ የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    <string name="reminder_before_dinner">እራት በፊት የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    <string name="reminder_after_dinner">እራት በኋላ የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    <string name="reminder_check_blood_sugar">የደም ስኳር መጠን ለመለካት ጊዜው ደርሷል</string>
+    
+    <!-- Menu Items -->
+    <string name="menu_export_pdf">ወደ PDF ላክ</string>
+    <string name="menu_export_csv">ወደ CSV ላክ</string>
+    <string name="menu_share">አጋራ</string>
+</resources> 

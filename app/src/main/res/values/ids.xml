@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_language" type="id"/>
+    <item name="beforeBreakfast" type="id"/>
+    <item name="afterBreakfast" type="id"/>
+    <item name="beforeLunch" type="id"/>
+    <item name="afterLunch" type="id"/>
+    <item name="beforeDinner" type="id"/>
+    <item name="afterDinner" type="id"/>
+    <item name="other" type="id"/>
+</resources> 

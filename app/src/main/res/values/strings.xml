@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dialog</string>
+    
+    <!-- Common Actions -->
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="ok">OK</string>
+    <string name="quit">Quit</string>
+    <string name="stay">Stay</string>
+    <string name="continue_editing">Continue Editing</string>
+    <string name="try_again">Try Again</string>
+    <string name="close">Close</string>
+    <string name="done">Done</string>
+    <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
+    <string name="clear">Clear</string>
+    <string name="search">Search</string>
+    <string name="view">View</string>
+    <string name="update">Update</string>
+    
+    <!-- Profile and User Management -->
+    <string name="new_profile">New Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="profile_saved">Profile saved successfully</string>
+    <string name="add_user">Add User</string>
+    <string name="edit_user">Edit User</string>
+    <string name="delete_user">Delete User</string>
+    <string name="select_user">Select User</string>
+    <string name="no_users">No users found</string>
+    
+    <!-- Form Fields -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    
+    <!-- Validation Messages -->
+    <string name="first_name_required">First name is required</string>
+    <string name="last_name_required">Last name is required</string>
+    <string name="age_required">Age is required</string>
+    <string name="gender_required">Gender is required</string>
+    <string name="invalid_age_range">Age must be between 0 and 120</string>
+    <string name="field_required">This field is required</string>
+    <string name="fill_all_fields">Please fill all required fields</string>
+    
+    <!-- Blood Sugar Management -->
+    <string name="blood_sugar_level">Blood Sugar Level</string>
+    <string name="enter_blood_sugar">Please enter blood sugar value</string>
+    <string name="save_reading">Save Reading</string>
+    <string name="reading_saved">Reading saved successfully</string>
+    <string name="reading_updated">Reading updated successfully</string>
+    
+    <!-- Units -->
+    <string name="unit">Unit</string>
+    <string name="mgdl">mg/dL</string>
+    <string name="mmol">mmol/L</string>
+    
+    <!-- Status -->
+    <string name="low">Low</string>
+    <string name="high">High</string>
+    <string name="normal">Normal</string>
+    
+    <!-- Reminders -->
+    <string name="reminder_title">Reminders</string>
+    <string name="select_reminder_time">Select Reminder Time</string>
+    <string name="reminder_saved">Reminder saved successfully</string>
+    <string name="delete_reminder">Delete Reminder</string>
+    
+    <!-- Dialog Messages -->
+    <string name="quit_without_saving">Quit Without Saving</string>
+    <string name="quit_without_saving_message">Do you want to quit without saving changes?</string>
+    
+    <!-- Language -->
+    <string name="select_language">Select Language</string>
+    <string name="english">English</string>
+    <string name="amharic">አማርኛ</string>
+    
+    <!-- Error Messages -->
+    <string name="error_loading_data">Error loading data</string>
+    <string name="error_saving_data">Error saving data</string>
+    <string name="error_updating_data">Error updating data</string>
+    <string name="error_deleting_data">Error deleting data</string>
+    <string name="error_saving">Error Saving</string>
+    <string name="error_updating">Error Updating</string>
+    <string name="error_saving_reminder">Error Saving Reminder</string>
+    <string name="error_deleting_reminder">Error Deleting Reminder</string>
+    <string name="invalid_number">Invalid Number</string>
+    
+    <!-- Format Strings -->
+    <string name="user_info_format">%s %s, %d, %s</string>
+    <string name="reminder_set">Reminder set for %s</string>
+    
+    <!-- Navigation -->
+    <string name="view_logs">View Logs</string>
+    <string name="view_reminders">View Reminders</string>
+    <string name="view_trends">View Trends</string>
+    
+    <!-- Blood Sugar -->
+    <string name="blood_sugar_trend">Blood Sugar Trend</string>
+    <string name="statistics">Statistics</string>
+    <string name="mmoll">mmol/L</string>
+    
+    <!-- Profile -->
+    <string name="save_profile">Save Profile</string>
+    
+    <!-- Meal Times -->
+    <string name="before_breakfast">Before Breakfast</string>
+    <string name="after_breakfast">After Breakfast</string>
+    <string name="before_lunch">Before Lunch</string>
+    <string name="after_lunch">After Lunch</string>
+    <string name="before_dinner">Before Dinner</string>
+    <string name="after_dinner">After Dinner</string>
+    <string name="other">Other</string>
+    
+    <!-- Table Headers -->
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="status">Status</string>
+    
+    <!-- Blood Sugar -->
+    <string name="edit_reading">Edit Reading</string>
+    <string name="no_readings">No Readings Found</string>
+    <string name="trends">Trends</string>
+    
+    <!-- Time Selection -->
+    <string name="select_time">Select Time</string>
+    
+    <!-- Form Fields -->
+    <string name="select_gender">Please Select Gender</string>
+    
+    <!-- Headers -->
+    <string name="input_header">Blood Sugar Input</string>
+    <string name="logs_header">Blood Sugar Logs</string>
+    <string name="trends_header">Blood Sugar Trends</string>
+    <string name="reminders_header">Reminders</string>
+    <string name="profile_header">User Profile</string>
+    <string name="users_header">Select User</string>
+    
+    <!-- Labels -->
+    <string name="name_label">Name:</string>
+    <string name="age_label">Age:</string>
+    <string name="gender_label">Gender:</string>
+    <string name="first_name_label">First Name:</string>
+    <string name="last_name_label">Last Name:</string>
+    
+    <!-- Input Hints -->
+    <string name="enter_first_name">Enter first name</string>
+    <string name="enter_last_name">Enter last name</string>
+    <string name="enter_age">Enter age</string>
+    <string name="enter_gender">Select gender</string>
+    <string name="welcome_user">Welcome, %s!</string>
+    
+    <!-- Dialog Titles -->
+    <string name="delete_reading_title">Delete Reading</string>
+    <string name="delete_user_title">Delete User</string>
+    <string name="delete_reminder_title">Delete Reminder</string>
+    
+    <!-- Dialog Messages -->
+    <string name="delete_reading_message">Are you sure you want to delete this reading?</string>
+    <string name="delete_user_message">Are you sure you want to delete this user? All data will be permanently deleted.</string>
+    <string name="delete_reminder_message">Are you sure you want to delete this reminder?</string>
+    
+    <!-- Success Messages -->
+    <string name="reading_deleted">Reading deleted successfully</string>
+    <string name="user_deleted">User deleted successfully</string>
+    <string name="reminder_deleted">Reminder deleted successfully</string>
+    
+    <!-- Error Messages -->
+    <string name="error_deleting">Error deleting</string>
+    <string name="error_deleting_user">Error deleting user</string>
+    
+    <!-- Reminder Notifications -->
+    <string name="reminder_before_breakfast">Time to check blood sugar before breakfast</string>
+    <string name="reminder_after_breakfast">Time to check blood sugar after breakfast</string>
+    <string name="reminder_before_lunch">Time to check blood sugar before lunch</string>
+    <string name="reminder_after_lunch">Time to check blood sugar after lunch</string>
+    <string name="reminder_before_dinner">Time to check blood sugar before dinner</string>
+    <string name="reminder_after_dinner">Time to check blood sugar after dinner</string>
+    <string name="reminder_check_blood_sugar">Time to check your blood sugar</string>
+    
+    <!-- Menu Items -->
+    <string name="menu_export_pdf">Export to PDF</string>
+    <string name="menu_export_csv">Export CSV</string>
+    <string name="menu_share">Share</string>
+</resources>

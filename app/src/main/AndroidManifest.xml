@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    
+    <application
+        android:name=".DialogApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Dialog">
+
+        <activity
+            android:name=".LanguageSplashActivity"
+            android:exported="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity 
+            android:name=".UserListActivity"
+            android:launchMode="singleTop"/>
+
+        <activity 
+            android:name=".UserProfileActivity"
+            android:parentActivityName=".UserListActivity"/>
+
+        <activity 
+            android:name=".BloodSugarInputActivity"
+            android:parentActivityName=".UserListActivity"/>
+
+        <activity 
+            android:name=".LogViewActivity"
+            android:parentActivityName=".BloodSugarInputActivity"/>
+
+        <activity 
+            android:name=".TrendsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName=".LogViewActivity"/>
+
+        <activity 
+            android:name=".ReminderActivity"
+            android:parentActivityName=".BloodSugarInputActivity"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.dialog.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <receiver 
+            android:name=".ReminderReceiver"
+            android:enabled="true"
+            android:exported="false" />
+            
+    </application>
+</manifest>
