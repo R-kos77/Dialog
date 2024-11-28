@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dialog</string>
+    <string name="app_name">DiaLog</string>
     
     <!-- Common Actions -->
     <string name="save">አስቀምጥ</string>

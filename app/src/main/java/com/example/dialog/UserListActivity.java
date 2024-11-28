@@ -273,7 +273,10 @@ public class UserListActivity extends BaseActivity {
         new AlertDialog.Builder(this)
             .setTitle(R.string.exit_app)
             .setMessage(R.string.exit_app_message)
-            .setPositiveButton(R.string.yes, (dialog, which) -> finishAffinity())
+            .setPositiveButton(R.string.yes, (dialog, which) -> {
+                super.onBackPressed();
+                finishAffinity();
+            })
             .setNegativeButton(R.string.no, null)
             .show();
     }
