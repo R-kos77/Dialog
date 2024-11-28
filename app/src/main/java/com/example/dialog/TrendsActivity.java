@@ -22,6 +22,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+
+import com.example.dialog.utils.LocaleHelper;
+
 import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -71,12 +74,19 @@ public class TrendsActivity extends BaseActivity {
             String userJson = prefs.getString("userData", "");
             if (!userJson.isEmpty()) {
                 JSONObject user = new JSONObject(userJson);
+                String gender = user.getString("gender");
+                
+                // Translate gender if in Amharic
+                if (LocaleHelper.getLanguage(this).equals("am")) {
+                    gender = gender.equals("Male") ? "ወንድ" : "ሴት";
+                }
+
                 String userInfo = String.format(Locale.getDefault(), 
-                    "Name: %s %s    Age: %d    Sex: %s",
+                    "%s %s    %d    %s",
                     user.getString("firstName"),
                     user.getString("lastName"),
                     user.getInt("age"),
-                    user.getString("gender"));
+                    gender);
                 userInfoText.setText(userInfo);
             }
         } catch (Exception e) {
