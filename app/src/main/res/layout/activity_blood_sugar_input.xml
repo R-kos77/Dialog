@@ -59,18 +59,18 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/mgdlRadio"
+                    android:id="@+id/mgdlUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/mgdl"/>
+                    android:text="mg/dL"
+                    android:checked="true" />
 
                 <RadioButton
-                    android:id="@+id/mmolRadio"
+                    android:id="@+id/mmolUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/mmoll"/>
+                    android:text="mmol/L"
+                    android:layout_marginStart="16dp" />
 
             </RadioGroup>
 

@@ -69,7 +69,7 @@
     <!-- Reminders -->
     <string name="reminder_title">ማስታወሻዎች</string>
     <string name="select_reminder_time">የማስታወሻ ሰዓት ይምረጡ</string>
-    <string name="reminder_saved">ማስታወሻ በተሳካ ሁኔታ ተቀምጧል</string>
+    <string name="reminder_saved">ማስታወሻ በተሳካ ሁኔታ ተቀም���ል</string>
     <string name="delete_reminder">ማስታወሻን ሰርዝ</string>
     
     <!-- Dialog Messages -->
@@ -168,7 +168,7 @@
     <!-- Success Messages -->
     <string name="reading_deleted">ንባብ በተሳካ ሁኔታ ተሰርዟል</string>
     <string name="user_deleted">ተጠቃሚ በተሳካ ሁኔታ ተሰርዟል</string>
-    <string name="reminder_deleted">ማስታወሻ በተሳካ ሁኔታ ተሰርዟል</string>
+    <string name="reminder_deleted">ማስታወሻ በተሳካ ሁኔታ ተሰር��ል</string>
     
     <!-- Error Messages -->
     <string name="error_deleting">በመሰረዝ ላይ ስህተት</string>
@@ -200,4 +200,14 @@
     <string name="exit_app_message">መውጣት እንደሚፈልጉ እርግጠኛ ነዎት?</string>
     <string name="yes">አዎ</string>
     <string name="no">አይ</string>
+    <string name="blood_sugar_level_hint">የደም ስኳር መጠን</string>
+    <string name="delete_reading">ንባብን ሰርዝ</string>
+    <string name="delete_reading_confirm">ይህን ንባብ መሰረዝ እንደሚፈልጉ እርግጠኛ ነዎት?</string>
+    <string name="input_blood_sugar">የደም ስኳር መጠን ያስገቡ</string>
+    <string name="error_empty_input">እባክዎ የደም ስኳር መጠን ያስገቡ</string>
+    <string name="error_invalid_input">የተሳሳተ ግብዓት</string>
+    
+    <!-- Units don't need translation -->
+    <string name="unit_mgdl">mg/dL</string>
+    <string name="unit_mmol">mmol/L</string>
 </resources> 

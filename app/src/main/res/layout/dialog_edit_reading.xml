@@ -5,18 +5,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <EditText
+        android:id="@+id/readingInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
-
-        <EditText
-            android:id="@+id/bloodSugarInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Blood Sugar Level"
-            android:inputType="numberDecimal"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:inputType="numberDecimal"
+        android:hint="@string/blood_sugar_level_hint"
+        android:autofillHints="bloodSugarLevel" />
 
     <RadioGroup
         android:id="@+id/unitGroup"
@@ -25,18 +20,17 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/mgdlRadio"
+            android:id="@+id/mgdlUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="mg/dL"
-            android:checked="true"
-            android:layout_marginEnd="16dp"/>
+            android:checked="true" />
 
         <RadioButton
-            android:id="@+id/mmolRadio"
+            android:id="@+id/mmolUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="mmol/L"/>
+            android:text="mmol/L"
+            android:layout_marginStart="16dp" />
     </RadioGroup>
-
 </LinearLayout> 

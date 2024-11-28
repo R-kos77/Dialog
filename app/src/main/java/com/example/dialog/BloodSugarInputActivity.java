@@ -5,14 +5,19 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,38 +33,94 @@ import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 public class BloodSugarInputActivity extends BaseActivity {
     private EditText bloodSugarInput;
-    private RadioGroup unitGroup;
     private Button saveButton;
     private Button viewLogsButton;
     private Button viewRemindersButton;
     private TextView welcomeText;
     private static final String TAG = "BloodSugarInput";
+    private RadioGroup unitGroup;
+    private double bloodSugarValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_sugar_input);
-        setupToolbar();
+        
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.input_blood_sugar));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(this, UserListActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        unitGroup = findViewById(R.id.unitGroup);
+        bloodSugarInput = findViewById(R.id.bloodSugarInput);
+        saveButton = findViewById(R.id.saveButton);
+        viewLogsButton = findViewById(R.id.viewLogsButton);
+        viewRemindersButton = findViewById(R.id.viewRemindersButton);
+        welcomeText = findViewById(R.id.welcomeText);
+
         initializeViews();
         setupListeners();
         setupWelcomeBanner();
-    }
 
-    private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.input_header));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        // Add TextWatcher to handle conversion in real-time
+        bloodSugarInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    if (!s.toString().isEmpty()) {
+                        double value = Double.parseDouble(s.toString());
+                        if (unitGroup.getCheckedRadioButtonId() == R.id.mmolUnit) {
+                            bloodSugarValue = value * 18.0182;
+                        } else {
+                            bloodSugarValue = value;
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "Error converting value: " + e.getMessage());
+                }
+            }
+        });
+
+        // Add radio button change listener
+        unitGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (!bloodSugarInput.getText().toString().isEmpty()) {
+                try {
+                    double value = Double.parseDouble(bloodSugarInput.getText().toString());
+                    if (checkedId == R.id.mmolUnit) {
+                        bloodSugarValue = value * 18.0182;
+                    } else {
+                        bloodSugarValue = value;
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "Error converting value: " + e.getMessage());
+                }
+            }
+        });
     }
 
     private void initializeViews() {
         bloodSugarInput = findViewById(R.id.bloodSugarInput);
-        unitGroup = findViewById(R.id.unitGroup);
         saveButton = findViewById(R.id.saveButton);
         viewLogsButton = findViewById(R.id.viewLogsButton);
         viewRemindersButton = findViewById(R.id.viewRemindersButton);
@@ -100,6 +161,12 @@ public class BloodSugarInputActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, UserListActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
         if (item.getItemId() == R.id.action_language) {
             showLanguageDialog();
             return true;
@@ -108,54 +175,63 @@ public class BloodSugarInputActivity extends BaseActivity {
     }
 
     private void saveReading() {
-        String bloodSugar = bloodSugarInput.getText().toString().trim();
-        if (bloodSugar.isEmpty()) {
-            bloodSugarInput.setError(getString(R.string.enter_blood_sugar));
-            return;
-        }
-
         try {
-            final double value = Double.parseDouble(bloodSugar);
-            boolean isMmol = unitGroup.getCheckedRadioButtonId() == R.id.mmolRadio;
-            
-            // Convert to mg/dL if needed
-            final double finalValue = isMmol ? value * 18.0182 : value;
+            String input = bloodSugarInput.getText().toString().trim();
+            if (input.isEmpty()) {
+                bloodSugarInput.setError(getString(R.string.error_empty_input));
+                Toast.makeText(this, getString(R.string.error_empty_input), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            String userId = getCurrentUserId();
-            Log.d(TAG, "Saving reading for user: " + userId);
+            LogEntry logEntry = new LogEntry(bloodSugarValue, System.currentTimeMillis(), 
+                ((DialogApp) getApplication()).getCurrentUserId());
 
-            // Create the LogEntry object
-            final LogEntry entry = new LogEntry(
-                finalValue,
-                System.currentTimeMillis(),
-                userId,
-                "" // Empty notes for now
-            );
-            
-            // Save in background thread
             new Thread(() -> {
-                try {
-                    AppDatabase db = AppDatabase.getInstance(this);
-                    db.logEntryDao().insert(entry);
+                AppDatabase.getInstance(this).logEntryDao().insert(logEntry);
+                runOnUiThread(() -> {
+                    // Hide keyboard
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null && getCurrentFocus() != null) {
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    }
+
+                    // Show checkmark animation
+                    ImageView checkmark = new ImageView(this);
+                    checkmark.setImageResource(R.drawable.check);
                     
-                    runOnUiThread(() -> {
-                        Toast.makeText(this, getString(R.string.reading_saved), Toast.LENGTH_SHORT).show();
-                        bloodSugarInput.setText("");
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "Error saving: " + e.getMessage(), e);
-                    runOnUiThread(() -> {
-                        Toast.makeText(this, getString(R.string.error_saving) + ": " + e.getMessage(), 
-                            Toast.LENGTH_LONG).show();
-                    });
-                }
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                        225,
+                        225,
+                        Gravity.CENTER
+                    );
+                    
+                    FrameLayout container = new FrameLayout(this);
+                    container.addView(checkmark, params);
+                    addContentView(container, new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT
+                    ));
+                    
+                    checkmark.setScaleX(0);
+                    checkmark.setScaleY(0);
+                    checkmark.animate()
+                        .scaleX(1)
+                        .scaleY(1)
+                        .setDuration(500)
+                        .withEndAction(() -> {
+                            new Handler().postDelayed(() -> {
+                                ((ViewGroup) container.getParent()).removeView(container);
+                                Intent intent = new Intent(this, LogViewActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                startActivity(intent);
+                            }, 200);
+                        })
+                        .start();
+                });
             }).start();
-            
-            // Hide keyboard after saving
-            KeyboardUtils.hideKeyboard(this);
-            
         } catch (NumberFormatException e) {
-            bloodSugarInput.setError(getString(R.string.invalid_number));
+            bloodSugarInput.setError(getString(R.string.error_invalid_input));
+            Toast.makeText(this, getString(R.string.error_invalid_input), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -179,7 +255,6 @@ public class BloodSugarInputActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(this, UserListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

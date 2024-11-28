@@ -51,12 +51,15 @@ import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 
 public class LogViewActivity extends BaseActivity {
     private TableLayout logTable;
     private TextView userInfoText;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.US);
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
     private List<LogEntry> logs = new ArrayList<>();
     private static final String TAG = "LogViewActivity";
 
@@ -64,6 +67,10 @@ public class LogViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_view);
+        
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.view_logs));
+        }
         setupToolbar();
         initializeViews();
         loadUserInfo();
@@ -293,55 +300,59 @@ public class LogViewActivity extends BaseActivity {
         }
     }
 
-    private void showEditDialog(LogEntry log) {
-        try {
-            Context dialogContext = LocaleHelper.updateResources(this, LocaleHelper.getLanguage(this));
-            View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_reading, null);
-            EditText bloodSugarInput = dialogView.findViewById(R.id.bloodSugarInput);
-            bloodSugarInput.setText(String.format("%.0f", log.bloodSugar));
+    private void showEditDialog(LogEntry logEntry) {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_reading, null);
+        EditText readingInput = dialogView.findViewById(R.id.readingInput);
+        RadioGroup unitGroup = dialogView.findViewById(R.id.unitGroup);
 
-            // Create dialog builder with activity context
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getString(R.string.edit_reading))
-                   .setView(dialogView)
-                   .setPositiveButton(getString(R.string.save), null)
-                   .setNegativeButton(getString(R.string.cancel), null)
-                   .setNeutralButton(getString(R.string.delete), null);
-
-            final AlertDialog dialog = builder.create();
-
-            // Show dialog only if activity is not finishing
-            if (!isFinishing()) {
-                dialog.setOnShowListener(dialogInterface -> {
-                    Button saveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    Button deleteButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
-
-                    saveButton.setOnClickListener(view -> {
-                        String input = bloodSugarInput.getText().toString();
-                        if (input.isEmpty()) {
-                            bloodSugarInput.setError(getString(R.string.enter_blood_sugar));
-                            return;
-                        }
-
-                        try {
-                            double newValue = Double.parseDouble(input);
-                            updateReading(log, newValue);
-                            dialog.dismiss();
-                        } catch (NumberFormatException e) {
-                            bloodSugarInput.setError(getString(R.string.invalid_number));
-                        }
-                    });
-
-                    deleteButton.setOnClickListener(view -> {
-                        showDeleteConfirmationDialog(log, dialog);
-                    });
-                });
-                dialog.show();
+        unitGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            String input = readingInput.getText().toString();
+            if (!input.isEmpty()) {
+                try {
+                    double value = Double.parseDouble(input);
+                    if (checkedId == R.id.mmolUnit) {
+                        readingInput.setText(String.format(Locale.US, "%.1f", value / 18.0182));
+                    } else {
+                        readingInput.setText(String.format(Locale.US, "%.0f", value * 18.0182));
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "Error converting value: " + e.getMessage());
+                }
             }
-        } catch (Exception e) {
-            Log.e(TAG, "Error showing edit dialog: " + e.getMessage());
-            Toast.makeText(this, getString(R.string.error_updating), Toast.LENGTH_SHORT).show();
-        }
+        });
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.edit_reading))
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.save), (dialogInterface, i) -> {
+                String input = readingInput.getText().toString();
+                if (!input.isEmpty()) {
+                    try {
+                        double value = Double.parseDouble(input);
+                        if (unitGroup.getCheckedRadioButtonId() == R.id.mmolUnit) {
+                            value = value * 18.0182;
+                        }
+                        updateReading(logEntry, value);
+                    } catch (NumberFormatException e) {
+                        Log.e(TAG, "Error parsing value: " + e.getMessage());
+                    }
+                }
+            })
+            .setNegativeButton(getString(R.string.cancel), null)
+            .setNeutralButton(getString(R.string.delete), (dialog1, which) -> {
+                new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.delete_reading))
+                    .setMessage(getString(R.string.delete_reading_confirm))
+                    .setPositiveButton(getString(R.string.yes), (dialogConfirm, whichConfirm) -> {
+                        deleteReading(logEntry);
+                    })
+                    .setNegativeButton(getString(R.string.no), null)
+                    .show();
+            })
+            .create();
+
+        readingInput.setText(String.format(Locale.US, "%.0f", logEntry.bloodSugar));
+        dialog.show();
     }
 
     private void showDeleteConfirmationDialog(LogEntry log, AlertDialog editDialog) {
@@ -448,12 +459,12 @@ public class LogViewActivity extends BaseActivity {
 
     private void exportToPdf() {
         try {
-            // Create directory if it doesn't exist
             File directory = new File(getExternalFilesDir(null), "exports");
-            if (!directory.exists()) {
-                directory.mkdirs();
+            if (!directory.exists() && !directory.mkdirs()) {
+                Log.e(TAG, "Failed to create directory");
+                return;
             }
-
+            
             File pdfFile = new File(directory, "blood_sugar_logs.pdf");
             PdfDocument document = new PdfDocument();
             PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842, 1).create(); // A4 size
@@ -515,19 +526,19 @@ public class LogViewActivity extends BaseActivity {
             startActivity(Intent.createChooser(intent, "Share Blood Sugar Logs PDF"));
             
         } catch (Exception e) {
-            Log.e(TAG, "Error exporting PDF: " + e.getMessage(), e);
+            Log.e(TAG, "Error exporting to PDF: " + e.getMessage());
             Toast.makeText(this, "Error exporting PDF", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void exportToCsv() {
         try {
-            // Create directory if it doesn't exist
             File directory = new File(getExternalFilesDir(null), "exports");
-            if (!directory.exists()) {
-                directory.mkdirs();
+            if (!directory.exists() && !directory.mkdirs()) {
+                Log.e(TAG, "Failed to create directory");
+                return;
             }
-
+            
             File csvFile = new File(directory, "blood_sugar_logs.csv");
             CSVWriter writer = new CSVWriter(new FileWriter(csvFile));
 
@@ -560,7 +571,7 @@ public class LogViewActivity extends BaseActivity {
             startActivity(Intent.createChooser(intent, "Share Blood Sugar Logs CSV"));
 
         } catch (Exception e) {
-            Log.e(TAG, "Error exporting CSV: " + e.getMessage(), e);
+            Log.e(TAG, "Error exporting to CSV: " + e.getMessage());
             Toast.makeText(this, "Error exporting CSV", Toast.LENGTH_SHORT).show();
         }
     }
@@ -600,5 +611,16 @@ public class LogViewActivity extends BaseActivity {
             offset += widths[i];
         }
         return offset;
+    }
+
+    private void formatLogEntry(LogEntry log) {
+        String formattedValue = String.format(Locale.getDefault(), "%.0f mg/dL", log.bloodSugar);
+        // ... rest of method
+    }
+
+    private void writeFile(File file, byte[] data) throws IOException {
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            out.write(data);
+        }
     }
 } 
