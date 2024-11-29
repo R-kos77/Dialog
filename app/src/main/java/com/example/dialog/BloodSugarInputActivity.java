@@ -251,6 +251,7 @@ public class BloodSugarInputActivity extends BaseActivity {
         return "";
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onBackPressed() {
         super.onBackPressed();

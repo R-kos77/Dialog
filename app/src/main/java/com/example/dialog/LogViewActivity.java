@@ -494,21 +494,13 @@ public class LogViewActivity extends BaseActivity {
                 canvas.drawText(headers[i], 50 + getOffset(columnWidths, i), y, paint);
             }
 
-            // Add log entries
+            // Add data rows
             y += 20;
-            paint.setTextSize(10);
             for (LogEntry log : logs) {
-                String date = dateFormat.format(new Date(log.timestamp));
-                String time = timeFormat.format(new Date(log.timestamp));
-                String status = getStatusForBloodSugar(log.bloodSugar);
-                
-                canvas.drawText(date, 50, y, paint);
-                canvas.drawText(time, 150, y, paint);
-                canvas.drawText(String.format("%.0f", log.bloodSugar), 230, y, paint);
-                canvas.drawText(status, 310, y, paint);
-                canvas.drawText(log.notes != null ? log.notes : "", 410, y, paint);
-                
-                y += 15;
+                canvas.drawText(dateFormat.format(new Date(log.timestamp)), 50, y, paint);
+                canvas.drawText(timeFormat.format(new Date(log.timestamp)), 150, y, paint);
+                canvas.drawText(String.format(Locale.getDefault(), "%.0f mg/dL", log.bloodSugar), 250, y, paint);
+                y += 20;
             }
 
             document.finishPage(page);
@@ -527,7 +519,7 @@ public class LogViewActivity extends BaseActivity {
             
         } catch (Exception e) {
             Log.e(TAG, "Error exporting to PDF: " + e.getMessage());
-            Toast.makeText(this, "Error exporting PDF", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error exporting to PDF", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -622,5 +614,11 @@ public class LogViewActivity extends BaseActivity {
         try (FileOutputStream out = new FileOutputStream(file)) {
             out.write(data);
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 } 
