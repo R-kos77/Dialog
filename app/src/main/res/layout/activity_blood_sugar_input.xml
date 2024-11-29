@@ -62,14 +62,14 @@
                     android:id="@+id/mgdlUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="mg/dL"
+                    android:text="@string/unit_mgdl"
                     android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/mmolUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="mmol/L"
+                    android:text="@string/unit_mmol"
                     android:layout_marginStart="16dp" />
 
             </RadioGroup>
