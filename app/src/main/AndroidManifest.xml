@@ -20,7 +20,7 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,17 +29,13 @@
 
         <activity 
             android:name=".LanguageSplashActivity"
-            android:exported="true"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
 
         <activity 
             android:name=".UserListActivity"
-            android:launchMode="singleTop"/>
+            android:exported="false">
+        </activity>
 
         <activity 
             android:name=".UserProfileActivity"

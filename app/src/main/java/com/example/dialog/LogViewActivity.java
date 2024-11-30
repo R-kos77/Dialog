@@ -543,7 +543,7 @@ public class LogViewActivity extends BaseActivity {
                 String[] row = {
                     dateFormat.format(new Date(log.timestamp)),
                     timeFormat.format(new Date(log.timestamp)),
-                    String.format("%.0f", log.bloodSugar),
+                    String.format(Locale.getDefault(), "%.0f", log.bloodSugar),
                     getStatusForBloodSugar(log.bloodSugar),
                     log.notes != null ? log.notes : ""
                 };
@@ -579,7 +579,7 @@ public class LogViewActivity extends BaseActivity {
                     .append(" ")
                     .append(timeFormat.format(new Date(log.timestamp)))
                     .append(": ")
-                    .append(String.format("%.0f", log.bloodSugar))
+                    .append(String.format(Locale.getDefault(), "%.0f", log.bloodSugar))
                     .append(" mg/dL (")
                     .append(getStatusForBloodSugar(log.bloodSugar))
                     .append(")\n");

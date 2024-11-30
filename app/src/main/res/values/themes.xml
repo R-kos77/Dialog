@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Dialog" parent="Base.Theme.Dialog" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
 </resources>

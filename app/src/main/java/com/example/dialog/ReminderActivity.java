@@ -249,30 +249,28 @@ public class ReminderActivity extends BaseActivity {
             if (reminder.isEnabled) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     if (alarmManager.canScheduleExactAlarms()) {
-                        alarmManager.setAlarmClock(
-                            new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
+                        // Use setRepeating for daily repetition
+                        alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            calendar.getTimeInMillis(),
+                            AlarmManager.INTERVAL_DAY,  // Repeat every day
                             pendingIntent
                         );
                     } else {
-                        // Request permission to schedule exact alarms
                         Intent permissionIntent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
                         startActivity(permissionIntent);
                     }
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setExactAndAllowWhileIdle(
-                        AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis(),
-                        pendingIntent
-                    );
                 } else {
-                    alarmManager.setExact(
+                    // Use setRepeating for daily repetition
+                    alarmManager.setRepeating(
                         AlarmManager.RTC_WAKEUP,
                         calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY,  // Repeat every day
                         pendingIntent
                     );
                 }
                 Toast.makeText(this, 
-                    String.format("Reminder set for %02d:%02d", reminder.hourOfDay, reminder.minute),
+                    String.format("Daily reminder set for %02d:%02d", reminder.hourOfDay, reminder.minute),
                     Toast.LENGTH_SHORT).show();
             } else {
                 alarmManager.cancel(pendingIntent);
