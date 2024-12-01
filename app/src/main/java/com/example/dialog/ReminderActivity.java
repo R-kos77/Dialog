@@ -227,6 +227,8 @@ public class ReminderActivity extends BaseActivity {
             Intent intent = new Intent(this, ReminderReceiver.class);
             intent.putExtra("reminderType", reminder.type);
             intent.putExtra("reminderId", reminder.id);
+            intent.putExtra("hourOfDay", reminder.hourOfDay);
+            intent.putExtra("minute", reminder.minute);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this,
@@ -240,6 +242,7 @@ public class ReminderActivity extends BaseActivity {
             calendar.set(Calendar.HOUR_OF_DAY, reminder.hourOfDay);
             calendar.set(Calendar.MINUTE, reminder.minute);
             calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
 
             // If time has passed today, schedule for tomorrow
             if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
@@ -249,11 +252,8 @@ public class ReminderActivity extends BaseActivity {
             if (reminder.isEnabled) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     if (alarmManager.canScheduleExactAlarms()) {
-                        // Use setRepeating for daily repetition
-                        alarmManager.setRepeating(
-                            AlarmManager.RTC_WAKEUP,
-                            calendar.getTimeInMillis(),
-                            AlarmManager.INTERVAL_DAY,  // Repeat every day
+                        alarmManager.setAlarmClock(
+                            new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
                             pendingIntent
                         );
                     } else {
@@ -261,11 +261,8 @@ public class ReminderActivity extends BaseActivity {
                         startActivity(permissionIntent);
                     }
                 } else {
-                    // Use setRepeating for daily repetition
-                    alarmManager.setRepeating(
-                        AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY,  // Repeat every day
+                    alarmManager.setAlarmClock(
+                        new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
                         pendingIntent
                     );
                 }

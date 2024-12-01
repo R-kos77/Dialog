@@ -17,14 +17,22 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class ReminderReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        // If this is a boot completed intent, restore all reminders
+        if (intent.getAction() != null && 
+            intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+            restoreReminders(context);
+            return;
+        }
+
         String reminderType = intent.getStringExtra("reminderType");
         int reminderId = intent.getIntExtra("reminderId", 0);
         
-        // Play notification sound
+        // Show notification
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmSound == null) {
             alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -44,68 +52,51 @@ public class ReminderReceiver extends BroadcastReceiver {
         // Create intent for opening app
         Intent openAppIntent = new Intent(context, BloodSugarInputActivity.class);
         openAppIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(
             context, 
             reminderId, 
             openAppIntent, 
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
-        builder.setContentIntent(pendingIntent);
+        builder.setContentIntent(notifyPendingIntent);
 
-        // Play sound even if device is in silent mode
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        if (audioManager != null) {
-            audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 
-                audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM), 0);
+        // Reschedule for tomorrow with exact same time
+        try {
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            calendar.set(Calendar.HOUR_OF_DAY, intent.getIntExtra("hourOfDay", 0));
+            calendar.set(Calendar.MINUTE, intent.getIntExtra("minute", 0));
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(
+                context,
+                intent.getIntExtra("reminderId", 0),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+
+            alarmManager.setAlarmClock(
+                new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), alarmPendingIntent),
+                alarmPendingIntent
+            );
+        } catch (Exception e) {
+            Log.e("ReminderReceiver", "Error rescheduling: " + e.getMessage());
         }
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) 
             == PackageManager.PERMISSION_GRANTED) {
             notificationManager.notify(reminderId, builder.build());
-            
-            // Schedule next alarm
-            scheduleNextAlarm(context, reminderType, reminderId);
-        }
-    }
-
-    private void scheduleNextAlarm(Context context, String reminderType, int reminderId) {
-        try {
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, ReminderReceiver.class);
-            intent.putExtra("reminderType", reminderType);
-            intent.putExtra("reminderId", reminderId);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context,
-                reminderId,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-
-            // Set time for tomorrow
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(),
-                    pendingIntent
-                );
-            } else {
-                alarmManager.setExact(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.getTimeInMillis(),
-                    pendingIntent
-                );
-            }
-        } catch (Exception e) {
-            Log.e("ReminderReceiver", "Error scheduling next alarm: " + e.getMessage());
         }
     }
 
     private String getReminderText(Context context, String reminderType) {
+        if (reminderType == null) {
+            return context.getString(R.string.reminder_check_blood_sugar);  // Default message
+        }
+        
         switch (reminderType) {
             case "before_breakfast": return context.getString(R.string.reminder_before_breakfast);
             case "after_breakfast": return context.getString(R.string.reminder_after_breakfast);
@@ -114,6 +105,62 @@ public class ReminderReceiver extends BroadcastReceiver {
             case "before_dinner": return context.getString(R.string.reminder_before_dinner);
             case "after_dinner": return context.getString(R.string.reminder_after_dinner);
             default: return context.getString(R.string.reminder_check_blood_sugar);
+        }
+    }
+
+    private void restoreReminders(Context context) {
+        new Thread(() -> {
+            try {
+                // Get all active reminders from database
+                List<Reminder> reminders = AppDatabase.getInstance(context)
+                    .reminderDao()
+                    .getAllReminders();  // You'll need to add this method to ReminderDao
+
+                // Reschedule each active reminder
+                for (Reminder reminder : reminders) {
+                    if (reminder.isEnabled) {
+                        scheduleReminder(context, reminder);
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("ReminderReceiver", "Error restoring reminders: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    private void scheduleReminder(Context context, Reminder reminder) {
+        // Copy of the scheduling code from ReminderActivity
+        try {
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(context, ReminderReceiver.class);
+            intent.putExtra("reminderType", reminder.type);
+            intent.putExtra("reminderId", reminder.id);
+            intent.putExtra("hourOfDay", reminder.hourOfDay);
+            intent.putExtra("minute", reminder.minute);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                reminder.id,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, reminder.hourOfDay);
+            calendar.set(Calendar.MINUTE, reminder.minute);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+            }
+
+            alarmManager.setAlarmClock(
+                new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
+                pendingIntent
+            );
+        } catch (Exception e) {
+            Log.e("ReminderReceiver", "Error scheduling reminder: " + e.getMessage());
         }
     }
 } 

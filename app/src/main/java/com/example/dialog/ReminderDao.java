@@ -20,4 +20,7 @@ public interface ReminderDao {
 
     @Query("SELECT * FROM reminders WHERE userId = :userId ORDER BY hourOfDay, minute")
     List<Reminder> getAllForUser(String userId);
+
+    @Query("SELECT * FROM reminders")
+    List<Reminder> getAllReminders();
 } 
