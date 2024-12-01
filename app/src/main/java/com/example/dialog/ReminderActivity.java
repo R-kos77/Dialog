@@ -29,6 +29,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import android.view.ContextThemeWrapper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.dialog.utils.LocaleHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +43,7 @@ import java.util.Locale;
 public class ReminderActivity extends BaseActivity {
     private ListView reminderList;
     private FloatingActionButton addReminderFab;
-    private List<Reminder> reminders = new ArrayList<>();
+    private final List<Reminder> reminders = new ArrayList<>();
     private ReminderAdapter adapter;
     private static final String TAG = "ReminderActivity";
 
@@ -49,6 +51,11 @@ public class ReminderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
+        
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.reminders_header));
+        }
+        
         setupToolbar();
         initializeViews();
         setupListeners();
@@ -58,9 +65,11 @@ public class ReminderActivity extends BaseActivity {
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.reminders_header));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.reminders_header));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
@@ -267,7 +276,8 @@ public class ReminderActivity extends BaseActivity {
                     );
                 }
                 Toast.makeText(this, 
-                    String.format("Daily reminder set for %02d:%02d", reminder.hourOfDay, reminder.minute),
+                    String.format(Locale.getDefault(), "Daily reminder set for %02d:%02d", 
+                        reminder.hourOfDay, reminder.minute),
                     Toast.LENGTH_SHORT).show();
             } else {
                 alarmManager.cancel(pendingIntent);
@@ -296,7 +306,8 @@ public class ReminderActivity extends BaseActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @NonNull
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.reminder_list_item, parent, false);

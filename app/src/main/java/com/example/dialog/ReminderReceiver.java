@@ -22,15 +22,64 @@ import java.util.List;
 public class ReminderReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        // If this is a boot completed intent, restore all reminders
+        // Handle boot completed first
         if (intent.getAction() != null && 
             intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             restoreReminders(context);
             return;
         }
 
-        String reminderType = intent.getStringExtra("reminderType");
+        // Rest of the existing verification code...
         int reminderId = intent.getIntExtra("reminderId", 0);
+        
+        // Check in database before proceeding
+        new Thread(() -> {
+            try {
+                List<Reminder> reminders = AppDatabase.getInstance(context)
+                    .reminderDao()
+                    .getAllReminders();
+                
+                boolean reminderExists = false;
+                boolean reminderEnabled = false;
+                
+                for (Reminder r : reminders) {
+                    if (r.id == reminderId) {
+                        reminderExists = true;
+                        reminderEnabled = r.isEnabled;
+                        break;
+                    }
+                }
+                
+                // Only proceed if reminder exists and is enabled
+                if (reminderExists && reminderEnabled) {
+                    showNotificationAndReschedule(context, intent);
+                } else {
+                    cancelReminder(context, reminderId);
+                }
+            } catch (Exception e) {
+                Log.e("ReminderReceiver", "Error verifying reminder: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    private void cancelReminder(Context context, int reminderId) {
+        try {
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(context, ReminderReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                reminderId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+            alarmManager.cancel(pendingIntent);
+        } catch (Exception e) {
+            Log.e("ReminderReceiver", "Error canceling reminder: " + e.getMessage());
+        }
+    }
+
+    private void showNotificationAndReschedule(Context context, Intent intent) {
+        String reminderType = intent.getStringExtra("reminderType");
         
         // Show notification
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -54,7 +103,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         openAppIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(
             context, 
-            reminderId, 
+            intent.getIntExtra("reminderId", 0), 
             openAppIntent, 
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
@@ -88,7 +137,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) 
             == PackageManager.PERMISSION_GRANTED) {
-            notificationManager.notify(reminderId, builder.build());
+            notificationManager.notify(intent.getIntExtra("reminderId", 0), builder.build());
         }
     }
 
@@ -111,56 +160,48 @@ public class ReminderReceiver extends BroadcastReceiver {
     private void restoreReminders(Context context) {
         new Thread(() -> {
             try {
-                // Get all active reminders from database
                 List<Reminder> reminders = AppDatabase.getInstance(context)
                     .reminderDao()
-                    .getAllReminders();  // You'll need to add this method to ReminderDao
+                    .getAllReminders();
 
-                // Reschedule each active reminder
                 for (Reminder reminder : reminders) {
                     if (reminder.isEnabled) {
-                        scheduleReminder(context, reminder);
+                        // Create intent with all necessary data
+                        Intent intent = new Intent(context, ReminderReceiver.class);
+                        intent.putExtra("reminderType", reminder.type);
+                        intent.putExtra("reminderId", reminder.id);
+                        intent.putExtra("hourOfDay", reminder.hourOfDay);
+                        intent.putExtra("minute", reminder.minute);
+
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                            context,
+                            reminder.id,
+                            intent,
+                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                        );
+
+                        // Set up calendar for the next occurrence
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.HOUR_OF_DAY, reminder.hourOfDay);
+                        calendar.set(Calendar.MINUTE, reminder.minute);
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MILLISECOND, 0);
+
+                        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+                            calendar.add(Calendar.DAY_OF_YEAR, 1);
+                        }
+
+                        // Schedule using AlarmManager
+                        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.setAlarmClock(
+                            new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
+                            pendingIntent
+                        );
                     }
                 }
             } catch (Exception e) {
                 Log.e("ReminderReceiver", "Error restoring reminders: " + e.getMessage());
             }
         }).start();
-    }
-
-    private void scheduleReminder(Context context, Reminder reminder) {
-        // Copy of the scheduling code from ReminderActivity
-        try {
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, ReminderReceiver.class);
-            intent.putExtra("reminderType", reminder.type);
-            intent.putExtra("reminderId", reminder.id);
-            intent.putExtra("hourOfDay", reminder.hourOfDay);
-            intent.putExtra("minute", reminder.minute);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context,
-                reminder.id,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, reminder.hourOfDay);
-            calendar.set(Calendar.MINUTE, reminder.minute);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-
-            if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
-                calendar.add(Calendar.DAY_OF_YEAR, 1);
-            }
-
-            alarmManager.setAlarmClock(
-                new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
-                pendingIntent
-            );
-        } catch (Exception e) {
-            Log.e("ReminderReceiver", "Error scheduling reminder: " + e.getMessage());
-        }
     }
 } 
