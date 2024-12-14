@@ -104,6 +104,9 @@
     <!-- Blood Sugar -->
     <string name="blood_sugar_trend">Blood Sugar Trend</string>
     <string name="statistics">Statistics</string>
+    <string name="stat_average">Average:</string>
+    <string name="stat_highest">Highest:</string>
+    <string name="stat_lowest">Lowest:</string>
     <string name="mmoll">mmol/L</string>
     
     <!-- Profile -->
