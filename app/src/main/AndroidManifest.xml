@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.dialog">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    
+
     <application
         android:name=".DialogApp"
         android:allowBackup="true"
@@ -20,63 +17,55 @@
 
         <activity
             android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity 
+        <activity
             android:name=".LanguageSplashActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
 
-        <activity 
-            android:name=".UserListActivity"
-            android:exported="false">
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
 
-        <activity 
-            android:name=".UserProfileActivity"
-            android:parentActivityName=".UserListActivity"/>
-
-        <activity 
+        <activity
             android:name=".BloodSugarInputActivity"
-            android:parentActivityName=".UserListActivity"/>
+            android:exported="false" />
 
-        <activity 
-            android:name=".LogViewActivity"
-            android:parentActivityName=".BloodSugarInputActivity"/>
-
-        <activity 
-            android:name=".TrendsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:parentActivityName=".LogViewActivity"/>
-
-        <activity 
+        <activity
             android:name=".ReminderActivity"
-            android:parentActivityName=".BloodSugarInputActivity"/>
+            android:exported="false" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.dialog.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+        <activity
+            android:name=".LogViewActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".TrendsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UserListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
 
         <receiver 
             android:name=".ReminderReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
-            
+
     </application>
 </manifest>

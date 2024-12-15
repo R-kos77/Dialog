@@ -101,8 +101,11 @@
     <string name="view_trends">አዝማሚያዎችን ይመልከቱ</string>
     
     <!-- Blood Sugar -->
-    <string name="blood_sugar_trend">የደም ስኳር አዝማሚያ</string>
+    <string name="blood_sugar_trend">የደም ስኳር ሁኔታ</string>
     <string name="statistics">ስታትስቲክስ</string>
+    <string name="stat_average">አማካይ:</string>
+    <string name="stat_highest">ከፍተኛ:</string>
+    <string name="stat_lowest">ዝቅተኛ:</string>
     <string name="mmoll">mmol/L</string>
     
     <!-- Profile -->
@@ -211,4 +214,4 @@
     <string name="unit_mgdl">mg/dL</string>
     <string name="unit_mmol">mmol/L</string>
     <string name="blood_sugar_hint">የደም ስኳር መጠን ያስገቡ</string>
-</resources> 
+</resources>

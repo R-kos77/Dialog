@@ -1,94 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_reminder_time"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/textPrimary"
-        android:gravity="center"
-        android:layout_marginBottom="24dp"/>
-
-    <RadioGroup
-        android:id="@+id/mealTimeGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/rb_before_breakfast"
-            style="@style/ReminderRadioButton"
-            android:text="@string/before_breakfast"/>
-
-        <RadioButton
-            android:id="@+id/rb_after_breakfast"
-            style="@style/ReminderRadioButton"
-            android:text="@string/after_breakfast"/>
-
-        <RadioButton
-            android:id="@+id/rb_before_lunch"
-            style="@style/ReminderRadioButton"
-            android:text="@string/before_lunch"/>
-
-        <RadioButton
-            android:id="@+id/rb_after_lunch"
-            style="@style/ReminderRadioButton"
-            android:text="@string/after_lunch"/>
-
-        <RadioButton
-            android:id="@+id/rb_before_dinner"
-            style="@style/ReminderRadioButton"
-            android:text="@string/before_dinner"/>
-
-        <RadioButton
-            android:id="@+id/rb_after_dinner"
-            style="@style/ReminderRadioButton"
-            android:text="@string/after_dinner"/>
-
-        <RadioButton
-            android:id="@+id/rb_other"
-            style="@style/ReminderRadioButton"
-            android:text="@string/other"/>
-
-    </RadioGroup>
-
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:timePickerMode="spinner"
-        android:visibility="gone"
-        android:layout_marginTop="16dp"/>
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="24dp">
+        android:orientation="vertical"
+        android:padding="24dp">
 
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cancel"
-            android:layout_marginEnd="8dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            android:text="@string/select_reminder_time"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
 
-        <Button
-            android:id="@+id/okButton"
-            android:layout_width="0dp"
+        <RadioGroup
+            android:id="@+id/mealTimeGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/ok"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_before_breakfast"
+                style="@style/ReminderRadioButton"
+                android:text="@string/before_breakfast"/>
+
+            <RadioButton
+                android:id="@+id/rb_after_breakfast"
+                style="@style/ReminderRadioButton"
+                android:text="@string/after_breakfast"/>
+
+            <RadioButton
+                android:id="@+id/rb_before_lunch"
+                style="@style/ReminderRadioButton"
+                android:text="@string/before_lunch"/>
+
+            <RadioButton
+                android:id="@+id/rb_after_lunch"
+                style="@style/ReminderRadioButton"
+                android:text="@string/after_lunch"/>
+
+            <RadioButton
+                android:id="@+id/rb_before_dinner"
+                style="@style/ReminderRadioButton"
+                android:text="@string/before_dinner"/>
+
+            <RadioButton
+                android:id="@+id/rb_after_dinner"
+                style="@style/ReminderRadioButton"
+                android:text="@string/after_dinner"/>
+
+            <RadioButton
+                android:id="@+id/rb_other"
+                style="@style/ReminderRadioButton"
+                android:text="@string/other"/>
+
+        </RadioGroup>
+
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            android:visibility="gone"
+            android:layout_marginTop="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel"
+                android:layout_marginEnd="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <Button
+                android:id="@+id/okButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/colorPrimary"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout> 
+</ScrollView>
