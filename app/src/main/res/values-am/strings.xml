@@ -214,4 +214,7 @@
     <string name="unit_mgdl">mg/dL</string>
     <string name="unit_mmol">mmol/L</string>
     <string name="blood_sugar_hint">የደም ስኳር መጠን ያስገቡ</string>
+    
+    <!-- Reminder Text -->
+    <string name="weekly_logs_reminder">ማስታወሻ\nእባክዎ በሳምንት ቢያንስ አንድ ጊዜ የእርስዎን መዝገቦች ለቤተሰብ አባል ወይም ለወዳጆ በመዝገብ ማሳያ ገጽ ሜንዩ ውስጥ ያለውን \"እንደ CSV ላክ\" አማራጭ በመጠቀም መላክ አይርሱ። ይህ በስልክዎ ላይ ችግር ቢፈጠር ሁለተኛ ቅጂ እንዲኖርዎት ያረጋግጣል።</string>
 </resources>

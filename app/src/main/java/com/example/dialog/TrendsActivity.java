@@ -232,7 +232,7 @@ public class TrendsActivity extends BaseActivity {
 
             // Share the PDF
             Uri pdfUri = FileProvider.getUriForFile(this, 
-                "com.example.dialog.fileprovider", pdfFile);
+                "com.rkos.dialog.fileprovider", pdfFile);
             
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("application/pdf");

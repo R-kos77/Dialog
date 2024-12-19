@@ -60,12 +60,6 @@ public class BloodSugarInputActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        toolbar.setNavigationOnClickListener(v -> {
-            Intent intent = new Intent(this, UserListActivity.class);
-            startActivity(intent);
-            finish();
-        });
-
         unitGroup = findViewById(R.id.unitGroup);
         bloodSugarInput = findViewById(R.id.bloodSugarInput);
         saveButton = findViewById(R.id.saveButton);
@@ -117,6 +111,12 @@ public class BloodSugarInputActivity extends BaseActivity {
                 }
             }
         });
+
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(this, UserListActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void initializeViews() {
@@ -125,6 +125,12 @@ public class BloodSugarInputActivity extends BaseActivity {
         viewLogsButton = findViewById(R.id.viewLogsButton);
         viewRemindersButton = findViewById(R.id.viewRemindersButton);
         welcomeText = findViewById(R.id.welcomeText);
+
+        // Set up root view click listener
+        View rootView = findViewById(R.id.root_layout);
+        if (rootView != null) {
+            rootView.setOnClickListener(v -> KeyboardUtils.hideKeyboard(this));
+        }
     }
 
     private void setupListeners() {
@@ -249,6 +255,22 @@ public class BloodSugarInputActivity extends BaseActivity {
             Log.e(TAG, "Error getting user ID: " + e.getMessage());
         }
         return "";
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                android.graphics.Rect outRect = new android.graphics.Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    KeyboardUtils.hideKeyboard(this);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     @SuppressWarnings("deprecation")

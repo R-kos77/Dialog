@@ -7,15 +7,19 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.dialog"
+        applicationId "com.rkos.dialog"
         minSdk 21
         targetSdk 34
-        versionCode 1
+        versionCode 3
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -33,15 +37,16 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.room:room-runtime:2.6.1'
+    implementation libs.cardview
     annotationProcessor 'androidx.room:room-compiler:2.6.1'
-    
+
     // Updated OpenCSV with all potential conflicts excluded
     implementation('com.opencsv:opencsv:5.7.1') {
         exclude group: 'commons-logging'
         exclude group: 'commons-collections'
         exclude module: 'commons-beanutils'
     }
-    
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

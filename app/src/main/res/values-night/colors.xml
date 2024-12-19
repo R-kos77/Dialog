@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackground">#121212</color>
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#B3FFFFFF</color>
+    <color name="textSecondaryLight">#80FFFFFF</color>
+    <color name="dividerColor">#1FFFFFFF</color>
+    <color name="buttonBackground">#2C2C2C</color>
+    <color name="buttonBorder">#64B5F6</color>
+    <color name="toolbarBackground">#1E1E1E</color>
+    <color name="toolbarIconTint">#FFFFFF</color>
+</resources>

@@ -444,9 +444,6 @@ public class LogViewActivity extends BaseActivity {
         if (id == R.id.action_language) {
             showLanguageDialog();
             return true;
-        } else if (id == R.id.action_export_pdf) {
-            exportToPdf();
-            return true;
         } else if (id == R.id.action_export_csv) {
             exportToCsv();
             return true;
@@ -455,72 +452,6 @@ public class LogViewActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void exportToPdf() {
-        try {
-            File directory = new File(getExternalFilesDir(null), "exports");
-            if (!directory.exists() && !directory.mkdirs()) {
-                Log.e(TAG, "Failed to create directory");
-                return;
-            }
-            
-            File pdfFile = new File(directory, "blood_sugar_logs.pdf");
-            PdfDocument document = new PdfDocument();
-            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842, 1).create(); // A4 size
-            PdfDocument.Page page = document.startPage(pageInfo);
-            Canvas canvas = page.getCanvas();
-
-            Paint paint = new Paint();
-            paint.setColor(Color.BLACK);
-            paint.setTextSize(12);
-
-            // Add title
-            paint.setTextSize(16);
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            canvas.drawText("Blood Sugar Logs", 50, 50, paint);
-
-            // Add user info
-            paint.setTextSize(12);
-            paint.setTypeface(Typeface.DEFAULT);
-            canvas.drawText(userInfoText.getText().toString(), 50, 80, paint);
-
-            // Add table headers
-            float y = 120;
-            float[] columnWidths = {100, 80, 80, 100, 100};
-            String[] headers = {"Date", "Time", "Blood Sugar", "Status", "Notes"};
-            
-            for (int i = 0; i < headers.length; i++) {
-                canvas.drawText(headers[i], 50 + getOffset(columnWidths, i), y, paint);
-            }
-
-            // Add data rows
-            y += 20;
-            for (LogEntry log : logs) {
-                canvas.drawText(dateFormat.format(new Date(log.timestamp)), 50, y, paint);
-                canvas.drawText(timeFormat.format(new Date(log.timestamp)), 150, y, paint);
-                canvas.drawText(String.format(Locale.getDefault(), "%.0f mg/dL", log.bloodSugar), 250, y, paint);
-                y += 20;
-            }
-
-            document.finishPage(page);
-            document.writeTo(new FileOutputStream(pdfFile));
-            document.close();
-
-            // Share the PDF
-            Uri uri = FileProvider.getUriForFile(this, 
-                "com.example.dialog.fileprovider", pdfFile);
-            
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("application/pdf");
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(Intent.createChooser(intent, "Share Blood Sugar Logs PDF"));
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Error exporting to PDF: " + e.getMessage());
-            Toast.makeText(this, "Error exporting to PDF", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void exportToCsv() {
@@ -554,7 +485,7 @@ public class LogViewActivity extends BaseActivity {
 
             // Share the CSV
             Uri uri = FileProvider.getUriForFile(this, 
-                "com.example.dialog.fileprovider", csvFile);
+                "com.rkos.dialog.fileprovider", csvFile);
             
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/csv");

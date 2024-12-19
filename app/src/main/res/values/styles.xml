@@ -44,10 +44,11 @@
     <style name="ToolbarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">?attr/colorSurface</item>
         <item name="android:elevation">4dp</item>
-        <item name="titleTextColor">@color/textPrimary</item>
-        <item name="navigationIconTint">@color/textPrimary</item>
+        <item name="titleTextColor">?attr/colorOnSurface</item>
+        <item name="navigationIconTint">?attr/colorOnSurface</item>
+        <item name="android:theme">@style/ThemeOverlay.Material3.ActionBar</item>
     </style>
 
     <style name="BackArrow">
@@ -77,4 +78,4 @@
         <item name="android:textSize">14sp</item>
         <item name="android:padding">16dp</item>
     </style>
-</resources> 
+</resources>

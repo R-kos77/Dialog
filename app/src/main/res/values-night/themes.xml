@@ -2,6 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Dialog" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="colorSurface">@color/toolbarBackground</item>
+        <item name="colorOnSurface">@color/toolbarIconTint</item>
+        <item name="android:navigationBarColor">@color/toolbarBackground</item>
+        <item name="android:statusBarColor">@color/toolbarBackground</item>
     </style>
 </resources>

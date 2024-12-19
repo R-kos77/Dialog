@@ -238,6 +238,7 @@ public class ReminderActivity extends BaseActivity {
             intent.putExtra("reminderId", reminder.id);
             intent.putExtra("hourOfDay", reminder.hourOfDay);
             intent.putExtra("minute", reminder.minute);
+            intent.putExtra("userId", reminder.userId);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this,
