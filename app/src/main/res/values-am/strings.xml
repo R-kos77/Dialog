@@ -35,7 +35,6 @@
     <!-- Form Fields -->
     <string name="first_name">ስም</string>
     <string name="last_name">የአባት ስም</string>
-    <string name="age">እድሜ</string>
     <string name="gender">ጾታ</string>
     <string name="male">ወንድ</string>
     <string name="female">ሴት</string>
@@ -43,9 +42,7 @@
     <!-- Validation Messages -->
     <string name="first_name_required">ስም ማስገባት አስፈላጊ ነው</string>
     <string name="last_name_required">የአባት ስም ማስገባት አስፈላጊ ነው</string>
-    <string name="age_required">እድሜ ማስገባት አስፈላጊ ነው</string>
     <string name="gender_required">ጾታ መምረጥ አስፈላጊ ነው</string>
-    <string name="invalid_age_range">እድሜ በ0 እና 120 መካከል መሆን አለበት</string>
     <string name="field_required">ይህ መስክ አስፈላጊ ነው</string>
     <string name="fill_all_fields">እባክዎ ሁሉንም ቦታዎች ይሙሉ</string>
     
@@ -92,7 +89,7 @@
     <string name="invalid_number">ልክ ያልሆነ ቁጥር</string>
     
     <!-- Format Strings -->
-    <string name="user_info_format">%s %s፣ %d፣ %s</string>
+    <string name="user_info_format">%s %s፣ %s</string>
     <string name="reminder_set">ማስታወሻ ለ %s ተዘጋጅቷል</string>
     
     <!-- Navigation -->
@@ -146,7 +143,6 @@
     
     <!-- Labels -->
     <string name="name_label">ስም፡</string>
-    <string name="age_label">እድሜ፡</string>
     <string name="gender_label">ጾታ፡</string>
     <string name="first_name_label">ስም፡</string>
     <string name="last_name_label">የአባት ስም፡</string>
@@ -154,7 +150,6 @@
     <!-- Input Hints -->
     <string name="enter_first_name">ስም ያስገቡ</string>
     <string name="enter_last_name">የአባት ስም ያስገቡ</string>
-    <string name="enter_age">እድሜ ያስገቡ</string>
     <string name="enter_gender">ጾታ ይምረጡ</string>
     <string name="welcome_user">እንኳን ደህና መጡ፣ %s!</string>
     
@@ -216,5 +211,5 @@
     <string name="blood_sugar_hint">የደም ስኳር መጠን ያስገቡ</string>
     
     <!-- Reminder Text -->
-    <string name="weekly_logs_reminder">ማስታወሻ\nእባክዎ በሳምንት ቢያንስ አንድ ጊዜ የእርስዎን መዝገቦች ለቤተሰብ አባል ወይም ለወዳጆ በመዝገብ ማሳያ ገጽ ሜንዩ ውስጥ ያለውን \"እንደ CSV ላክ\" አማራጭ በመጠቀም መላክ አይርሱ። ይህ በስልክዎ ላይ ችግር ቢፈጠር ሁለተኛ ቅጂ እንዲኖርዎት ያረጋግጣል።</string>
+    <string name="weekly_logs_reminder">ማስታወሻ\nእባክዎ በሳምንት ቢያንስ አንድ ጊዜ የእርስዎን መዝገቦች ለቤተሰብ አባል ወይም ለወዳጆ በመዝገብ ማሳያ ገጽ ሜንዩ ውስጥ ያለውን \"ወደ CSV ላክ\" አማራጭ በመጠቀም መላክ አይርሱ። ይህ በስልክዎ ላይ ችግር ቢፈጠር ሁለተኛ ቅጂ እንዲኖርዎት ያረጋግጣል።</string>
 </resources>

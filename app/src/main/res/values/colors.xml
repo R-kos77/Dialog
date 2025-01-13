@@ -16,4 +16,6 @@
     <color name="dividerColor">#EEEEEE</color>
     <color name="buttonBackground">#FFFFFF</color>
     <color name="buttonBorder">#1E88E5</color>
+    <color name="toolbarBackground">#FFFFFF</color>
+    <color name="toolbarIconTint">#212121</color>
 </resources>

@@ -35,7 +35,6 @@
     <!-- Form Fields -->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="age">Age</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -43,9 +42,7 @@
     <!-- Validation Messages -->
     <string name="first_name_required">First name is required</string>
     <string name="last_name_required">Last name is required</string>
-    <string name="age_required">Age is required</string>
     <string name="gender_required">Gender is required</string>
-    <string name="invalid_age_range">Age must be between 0 and 120</string>
     <string name="field_required">This field is required</string>
     <string name="fill_all_fields">Please fill all required fields</string>
     
@@ -93,7 +90,7 @@
     <string name="invalid_number">Invalid Number</string>
     
     <!-- Format Strings -->
-    <string name="user_info_format">%s %s, %d, %s</string>
+    <string name="user_info_format">%s %s, %s</string>
     <string name="reminder_set">Reminder set for %s</string>
     
     <!-- Navigation -->
@@ -147,7 +144,6 @@
     
     <!-- Labels -->
     <string name="name_label">Name:</string>
-    <string name="age_label">Age:</string>
     <string name="gender_label">Gender:</string>
     <string name="first_name_label">First Name:</string>
     <string name="last_name_label">Last Name:</string>
@@ -155,7 +151,6 @@
     <!-- Input Hints -->
     <string name="enter_first_name">Enter first name</string>
     <string name="enter_last_name">Enter last name</string>
-    <string name="enter_age">Enter age</string>
     <string name="enter_gender">Select gender</string>
     <string name="welcome_user">Welcome, %s!</string>
     

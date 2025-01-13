@@ -51,6 +51,13 @@
         <item name="android:theme">@style/ThemeOverlay.Material3.ActionBar</item>
     </style>
 
+    <style name="ToolbarStyle.Blue">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="navigationIconTint">@color/white</item>
+        <item name="android:theme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
+    </style>
+
     <style name="BackArrow">
         <item name="android:tint">@color/textPrimary</item>
     </style>

@@ -10,7 +10,9 @@
         <item name="colorOnSurface">@color/textPrimary</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="Theme.Dialog" parent="Base.Theme.Dialog" />

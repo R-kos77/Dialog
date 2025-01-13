@@ -29,7 +29,7 @@ import java.util.Locale;
 public class UserProfileActivity extends AppCompatActivity {
     private EditText firstNameInput;
     private EditText lastNameInput;
-    private EditText ageInput;
+
     private RadioGroup genderGroup;
     private Button saveButton;
     private String editingUser = null;
@@ -58,7 +58,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private void initializeViews() {
         firstNameInput = findViewById(R.id.firstNameInput);
         lastNameInput = findViewById(R.id.lastNameInput);
-        ageInput = findViewById(R.id.ageInput);
+
         genderGroup = findViewById(R.id.genderGroup);
         saveButton = findViewById(R.id.saveButton);
     }
@@ -66,7 +66,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private void clearFields() {
         firstNameInput.setText("");
         lastNameInput.setText("");
-        ageInput.setText("");
+
         genderGroup.clearCheck();
     }
 
@@ -89,7 +89,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 JSONObject user = new JSONObject(userJson);
                 firstNameInput.setText(user.getString("firstName"));
                 lastNameInput.setText(user.getString("lastName"));
-                ageInput.setText(String.valueOf(user.getInt("age")));
+
                 
                 if (user.getString("gender").equals("Male")) {
                     genderGroup.check(R.id.maleRadio);
@@ -119,10 +119,7 @@ public class UserProfileActivity extends AppCompatActivity {
             lastNameInput.setError(getString(R.string.last_name_required));
             return false;
         }
-        if (ageInput.getText().toString().trim().isEmpty()) {
-            ageInput.setError(getString(R.string.age_required));
-            return false;
-        }
+
         if (genderGroup.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, getString(R.string.select_gender), Toast.LENGTH_SHORT).show();
             return false;
@@ -135,7 +132,7 @@ public class UserProfileActivity extends AppCompatActivity {
             JSONObject userJson = new JSONObject();
             userJson.put("firstName", firstNameInput.getText().toString().trim());
             userJson.put("lastName", lastNameInput.getText().toString().trim());
-            userJson.put("age", Integer.parseInt(ageInput.getText().toString().trim()));
+
             userJson.put("gender", 
                 genderGroup.getCheckedRadioButtonId() == R.id.maleRadio ? "Male" : "Female");
 
@@ -188,7 +185,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         firstNameInput.setOnFocusChangeListener(focusChangeListener);
         lastNameInput.setOnFocusChangeListener(focusChangeListener);
-        ageInput.setOnFocusChangeListener(focusChangeListener);
+
     }
 
     @Override
@@ -250,12 +247,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 JSONObject user = new JSONObject(userJson);
                 String currentFirstName = firstNameInput.getText().toString();
                 String currentLastName = lastNameInput.getText().toString();
-                String currentAge = ageInput.getText().toString();
+
                 String currentGender = genderGroup.getCheckedRadioButtonId() == R.id.maleRadio ? "Male" : "Female";
 
                 return !currentFirstName.equals(user.getString("firstName")) ||
                        !currentLastName.equals(user.getString("lastName")) ||
-                       !currentAge.equals(String.valueOf(user.getInt("age"))) ||
+
                        !currentGender.equals(user.getString("gender"));
             }
         } catch (Exception e) {

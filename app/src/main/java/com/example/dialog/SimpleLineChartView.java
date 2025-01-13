@@ -62,7 +62,8 @@ public class SimpleLineChartView extends View {
         gridPaint.setAlpha(100);
 
         textPaint = new Paint();
-        textPaint.setColor(Color.DKGRAY);
+        boolean isDarkMode = (getContext().getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES;
+        textPaint.setColor(isDarkMode ? Color.WHITE : Color.DKGRAY);
         textPaint.setTextSize(12);
         textPaint.setAntiAlias(true);
 

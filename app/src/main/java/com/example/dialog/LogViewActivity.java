@@ -58,7 +58,7 @@ import java.nio.file.Files;
 public class LogViewActivity extends BaseActivity {
     private TableLayout logTable;
     private TextView userInfoText;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
     private List<LogEntry> logs = new ArrayList<>();
     private static final String TAG = "LogViewActivity";
@@ -103,13 +103,13 @@ public class LogViewActivity extends BaseActivity {
             String userJson = prefs.getString("userData", "");
             if (!userJson.isEmpty()) {
                 JSONObject user = new JSONObject(userJson);
-                String info = getString(R.string.user_info_format,
-                    user.getString("firstName"),
-                    user.getString("lastName"),
-                    user.getInt("age"),
-                    user.getString("gender").equals("Male") ? 
-                        getString(R.string.male) : getString(R.string.female)
-                );
+                String genderText = user.getString("gender").equals("Male") ? 
+                        getString(R.string.male) : getString(R.string.female);
+                String info = String.format(Locale.getDefault(), "%s %s, %s",
+                        user.getString("firstName"),
+                        user.getString("lastName"),
+                        genderText);
+
                 userInfoText.setText(info);
             }
         } catch (Exception e) {

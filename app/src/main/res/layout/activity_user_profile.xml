@@ -52,21 +52,6 @@
                 android:inputType="textPersonName"
                 android:hint="@string/enter_last_name"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/age_label"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"/>
-
-            <EditText
-                android:id="@+id/ageInput"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:inputType="number"
-                android:hint="@string/enter_age"/>
 
             <TextView
                 android:layout_width="wrap_content"

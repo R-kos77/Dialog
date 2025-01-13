@@ -82,10 +82,9 @@ public class TrendsActivity extends BaseActivity {
                 }
 
                 String userInfo = String.format(Locale.getDefault(), 
-                    "%s %s    %d    %s",
+                    "%s %s    %s",
                     user.getString("firstName"),
                     user.getString("lastName"),
-                    user.getInt("age"),
                     gender);
                 userInfoText.setText(userInfo);
             }
