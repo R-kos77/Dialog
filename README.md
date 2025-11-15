@@ -46,6 +46,21 @@ This provides a personalized experience for every profile.
 ### Amharic-Based Interface
 The entire user interface, text, and flow are adapted for clarity and simplicity for Amharic readers.
 
+## Screenshots
+Below are example screenshots of the Dialog app in action:
+
+Main Input Screen:  
+![Main Blood Glucose Input Screen](screenshots/Dialog_Blood_Sugar_Input.png)
+
+Blood Glucose Readings Screen:  
+![View Readings](screenshots/Dialog_BG_Readings.png)
+
+View Reminders Screen:  
+![Daily Reminders](screenshots/Dialog_Reminders.png)
+
+Graph Visualization:  
+![Graph](screenshots/Dialog_Reading_Graph.png)
+
 ## AAB Releases
 
 Prebuilt Android App Bundles (.aab) are available in the `releases` section of this repository. Users can download the latest AAB file to install the app on their devices.
