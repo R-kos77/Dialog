@@ -77,7 +77,7 @@ Prebuilt Android App Bundles (.aab) are available in the `releases` section of t
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/Dialog.git
+   git clone https://github.com/R-kos77/Dialog.git
 2. Open the project in Android Studio.
 
 3. Build and run the application on an emulator or a physical Android device.
